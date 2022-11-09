@@ -1,5 +1,6 @@
 import {renderPhotos} from './printElement.js';
 import './form-validation.js';
 import './photoEffects.js';
-renderPhotos();
+import {userData} from './fetch.js';
+userData();
 

@@ -22,9 +22,9 @@ const renderPhoto = (picture) => {
 };
 
 //функция создания миниатюр
-const renderPhotos = () => {
+const renderPhotos = (serverData) => {
   const pictureFragment = document.createDocumentFragment();
-  dataProfiles.forEach((photo) => {
+  serverData.forEach((photo) => {
     pictureFragment.appendChild(renderPhoto(photo));
   });
   profilesList.appendChild(pictureFragment);
