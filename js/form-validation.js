@@ -43,8 +43,12 @@ const checkDublicateHashtags = (value) => {
 
 //проверка валидности хэштега (длинна и формат разделение пробелами)
 const checkOneHashtag = (tag) => regExpValidTag.test(tag);
-const checkValidHashtags = (tags) => tags.trim().split(' ').every(checkOneHashtag);
-
+const checkValidHashtags = (tags) =>{
+  if (tags === '') {
+    return true;
+  }
+  return tags.trim().split(' ').every(checkOneHashtag);
+};
 //функция макс количества хэштэгшов
 const hashtagsMaxCount = (tags) => tags.trim().split(' ').filter((tag) => tag !== '').length <= MAX_HASHTAG_COUNTS;
 
