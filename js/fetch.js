@@ -1,7 +1,7 @@
-import {renderPhotos} from './printElement.js';
+import {showAlert} from './util.js';
 
 // получение данных с сервера
-const userData = () => {
+const userData = (onSuccess) => {
   fetch ('https://27.javascript.pages.academy/kekstagram/data' ,
     {
       method: 'GET',
@@ -11,16 +11,34 @@ const userData = () => {
     .then((respone) => {
       respone.json()
         .then((data) => {
-          renderPhotos(data);
+          onSuccess(data);
+        })
+        .catch(() => {
+          showAlert('Что-то пошло не так');
         });
     });
 };
 
 //отправка данных на сервер
-const postUserData = () => {
-  fetch ('https://27.javascript.pages.academy/kekstagram/data').then()
-}
+const sendData = (onSuccess, onFail, body) => {
+  fetch ('https://27.javascript.pages.academy/kekstagram',
+    {
+      method: 'POST',
+      body,
+    },
+  ).then((response) => {
+    if(response.ok) {
+      onSuccess();
+    } else {
+      onFail('Не удалось отправить форму. Попробуйте еще раз');
+    }
+  })
+    .catch(() => {
+      onFail('Не удалось отправить форму. Попробуйте  еще раз');
+    });
+};
 
 export {
   userData,
+  sendData,
 };

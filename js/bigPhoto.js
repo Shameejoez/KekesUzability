@@ -1,3 +1,5 @@
+import {isEscapeKey} from './util.js';
+
 // фото крупным планом
 const bigPicture = document.querySelector('.big-picture');
 // "боди" сайта
@@ -16,9 +18,6 @@ const commentContent = commentList.querySelector('.social__comment');
 const counterLoadComment = bigPicture.querySelector('.social__comment-count');
 //копия массива с комментариями
 let protoCommentsArr = [];
-
-//функция использования клавиши Escape
-const isEscapeKey = (evt) => evt.key === 'Escape';
 
 //закрытие модалки на esc
 const onEscKeyClosed = (evt) => {

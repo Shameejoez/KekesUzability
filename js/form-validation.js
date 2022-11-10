@@ -2,6 +2,9 @@ import {isEscapeKey} from './bigPhoto.js';
 import './scalePhoto.js';
 import {resetScale} from './scalePhoto.js';
 import {resetEffects} from './photoEffects.js';
+import {sendData} from './fetch.js';
+import {showAlert} from './util.js';
+
 //данные из ТЗ для формы
 const MAX_HASHTAG_COUNTS = 5;
 
@@ -25,7 +28,7 @@ const hashtagField = form.querySelector('.text__hashtags');
 //поле описания фотографии
 const commentField = form.querySelector('.text__description');
 //кнопка отправки формы
-const submitForm = form.querySelector('.img-upload__submit');
+const buttonSubmitForm = form.querySelector('.img-upload__submit');
 
 //проверка длинны комментария к фото
 const checkLengthDescriptionPhoto = (text) => text.length <= MAX_LENGTH_DESCRIPTION;
@@ -84,6 +87,7 @@ pristine.addValidator(hashtagField, checkValidHashtags, 'Хэштэги разд
 
 //закрытие формы редактирования изображения
 function closerEditorImage () {
+  console.log('жмяк');
   form.reset();
   pristine.reset();
   resetEffects();
@@ -109,14 +113,42 @@ uploadFile.addEventListener('change', (evt) => {
   openEditorImage();
 
 });
+// блокировка кнопки отправки формы
+const blockButtonSubmitForm = () => {
+  buttonSubmitForm.disabled = true;
+  buttonSubmitForm.textContent = 'Отправляю...';
+};
+// разблокировка кнопки отправки формы
+const unblockbuttonSubmitForm = () => {
+  buttonSubmitForm.disabled = false;
+  buttonSubmitForm.textContent = 'Сохранить';
+};
 
-//
-form.addEventListener('submit', (evt)=> {
-  evt.preventDefault();
-});
+// функция отправки формы
+const setUserFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt)=> {
+    evt.preventDefault();
 
-//блокировка отправки формы в случае неверно заполненной формы
-form.addEventListener('input', () => {
-  const isValid = pristine.validate();
-  submitForm.disabled = !isValid;
-});
+    const isValid = pristine.validate();
+    if(isValid) {
+      blockButtonSubmitForm();
+      sendData(
+        () => {
+          onSuccess();
+          unblockbuttonSubmitForm();
+        },
+        () => {
+          showAlert ('жига дрыга');
+          unblockbuttonSubmitForm();
+        },
+        new FormData(evt.target),
+      );
+    }
+  });
+};
+
+setUserFormSubmit(closerEditorImage);
+
+export {
+  setUserFormSubmit,
+};
