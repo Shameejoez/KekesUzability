@@ -43,12 +43,9 @@ const checkDublicateHashtags = (value) => {
 
 //проверка валидности хэштега (длинна и формат разделение пробелами)
 const checkOneHashtag = (tag) => regExpValidTag.test(tag);
-const checkValidHashtags = (tags) =>{
-  if (tags === '') {
-    return true;
-  }
-  return tags.trim().split(' ').every(checkOneHashtag);
-};
+const checkValidHashtags = (tags) =>tags.trim().split(' ').every(checkOneHashtag);
+
+
 //функция макс количества хэштэгшов
 const hashtagsMaxCount = (tags) => tags.trim().split(' ').filter((tag) => tag !== '').length <= MAX_HASHTAG_COUNTS;
 
@@ -91,7 +88,6 @@ pristine.addValidator(hashtagField, checkValidHashtags, 'Хэштэги разд
 
 //закрытие формы редактирования изображения
 function closerEditorImage () {
-  console.log('жмяк');
   form.reset();
   pristine.reset();
   resetEffects();
@@ -112,7 +108,7 @@ const openEditorImage = () => {
 
 
 //обработчик событий
-uploadFile.addEventListener('change', (evt) => {
+uploadFile.addEventListener('click', (evt) => {
   evt.preventDefault();
   openEditorImage();
 
@@ -152,7 +148,3 @@ const setUserFormSubmit = (onSuccess) => {
 };
 
 setUserFormSubmit(closerEditorImage);
-
-export {
-  setUserFormSubmit,
-};
