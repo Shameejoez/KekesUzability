@@ -1,0 +1,34 @@
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+.ramka_kolod {
+	background-color: red;
+	color: blanchedalmond;
+	display : flex;
+	justify-content: center;
+	align-items: center;
+	height: 500px;
+	max-width:1000px;
+	position: absolute;
+	top: calc(50% - 230px);
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	background-image:
+
+}
+
+.skin {
+	height: 200px;
+	width: 150px;
+
+	
+}
+
+
+h1 {
+	color: rgb(45, 246, 152);
+	
+}
